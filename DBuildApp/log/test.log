@@ -1,0 +1,603 @@
+  [1m[36m (126.4ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (108.3ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to DeviseCreateUsers (20140414191541)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35mSQL (1.6ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140414191541"]]
+  [1m[36m (127.6ms)[0m  [1mcommit transaction[0m
+Migrating to AddColumnsToUsers (20140420173907)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "users" ADD "position" integer[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "users" ADD "uid" varchar(255)
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "provider" varchar(255)[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "users" ADD "token" varchar(255)
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "secret" varchar(255)[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "users" ADD "expires_at" datetime
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "image" varchar(255)[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "users" ADD "first_name" varchar(255)
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "last_name" varchar(255)[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140420173907"]]
+  [1m[36m (148.3ms)[0m  [1mcommit transaction[0m
+Migrating to CreateCustomers (20140420184858)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "customers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140420184858"]]
+  [1m[36m (139.2ms)[0m  [1mcommit transaction[0m
+Migrating to CreateLineItems (20140420185156)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "line_items" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "description" varchar(255), "price" float, "merchant_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140420185156"]]
+  [1m[36m (214.0ms)[0m  [1mcommit transaction[0m
+Migrating to CreatePurchases (20140420185243)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "purchases" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "quantity" integer, "line_item_id" integer, "customer_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140420185243"]]
+  [1m[36m (114.1ms)[0m  [1mcommit transaction[0m
+Migrating to CreateMerchants (20140420185329)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "merchants" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "address" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140420185329"]]
+  [1m[36m (139.2ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@test.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (6.2ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:23:54 UTC +00:00], ["email", "test@test.com"], ["encrypted_password", "$2a$04$0k59FCT8/hXHHEsX64ctlOMV9yIrQM3pZGQSH7LCmbQnFn.FJpRKm"], ["updated_at", Sun, 20 Apr 2014 19:23:54 UTC +00:00]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@test.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (6.2ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["email", "test@test.com"], ["encrypted_password", "$2a$04$tH3J1W6RtWRNFMkGKp5eEeBqa1a0X4LxcJP98SHQQbrOSEYJXLBKS"], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by UploadController#create as HTML
+  Parameters: {"database"=>#<Rack::Test::UploadedFile:0x9468170 @content_type=nil, @original_filename="example.tab", @tempfile=#<File:/tmp/example.tab20140421-10824-1rpkfz>>}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mCustomer Load (0.1ms)[0m  SELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Snake Plissken' ORDER BY "customers"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["name", "Snake Plissken"], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Bob''s Pizza' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)  [["address", "987 Fake St"], ["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["name", "Bob's Pizza"], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mLineItem Load (0.1ms)[0m  SELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$10 off $20 of food' ORDER BY "line_items"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `description`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["description", "$10 off $20 of food"], ["price", 10.0], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["customer_id", 1], ["line_item_id", 1], ["quantity", 2], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mCustomer Load (0.1ms)[0m  [1mSELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Amy Pond' ORDER BY "customers"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `name`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["name", "Amy Pond"], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mMerchant Load (0.1ms)[0m  [1mSELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Tom''s Awesome Shop' ORDER BY "merchants"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)[0m  [["address", "456 Unreal Rd"], ["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["name", "Tom's Awesome Shop"], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mLineItem Load (0.1ms)[0m  [1mSELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$30 of awesome for $10' ORDER BY "line_items"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `description`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["description", "$30 of awesome for $10"], ["price", 10.0], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["customer_id", 2], ["line_item_id", 2], ["quantity", 5], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mCustomer Load (0.1ms)[0m  SELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Marty McFly' ORDER BY "customers"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["name", "Marty McFly"], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Sneaker Store Emporium' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)  [["address", "123 Fake St"], ["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["name", "Sneaker Store Emporium"], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mLineItem Load (0.1ms)[0m  SELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$20 Sneakers for $5' ORDER BY "line_items"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `description`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["description", "$20 Sneakers for $5"], ["price", 5.0], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["customer_id", 3], ["line_item_id", 3], ["quantity", 1], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mCustomer Load (0.1ms)[0m  [1mSELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Snake Plissken' ORDER BY "customers"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Sneaker Store Emporium' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mLineItem Load (0.1ms)[0m  [1mSELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$20 Sneakers for $5' ORDER BY "line_items"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00], ["customer_id", 1], ["line_item_id", 3], ["quantity", 4], ["updated_at", Sun, 20 Apr 2014 19:25:47 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  Rendered upload/create.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 129ms (Views: 36.1ms | ActiveRecord: 6.4ms)
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "purchases"[0m
+  [1m[35m (0.2ms)[0m  rollback transaction
+  [1m[36m (141.9ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (141.6ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to DeviseCreateUsers (20140414191541)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35mSQL (1.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140414191541"]]
+  [1m[36m (177.8ms)[0m  [1mcommit transaction[0m
+Migrating to AddColumnsToUsers (20140420173907)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "users" ADD "position" integer[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "users" ADD "uid" varchar(255)
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "provider" varchar(255)[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "users" ADD "token" varchar(255)
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "secret" varchar(255)[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "users" ADD "expires_at" datetime
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "image" varchar(255)[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "users" ADD "first_name" varchar(255)
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "last_name" varchar(255)[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140420173907"]]
+  [1m[36m (194.8ms)[0m  [1mcommit transaction[0m
+Migrating to CreateCustomers (20140420184858)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "customers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140420184858"]]
+  [1m[36m (168.3ms)[0m  [1mcommit transaction[0m
+Migrating to CreateLineItems (20140420185156)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "line_items" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "description" varchar(255), "price" float, "merchant_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140420185156"]]
+  [1m[36m (147.3ms)[0m  [1mcommit transaction[0m
+Migrating to CreatePurchases (20140420185243)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "purchases" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "quantity" integer, "line_item_id" integer, "customer_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140420185243"]]
+  [1m[36m (147.5ms)[0m  [1mcommit transaction[0m
+Migrating to CreateMerchants (20140420185329)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "merchants" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "address" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140420185329"]]
+  [1m[36m (181.0ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@test.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (6.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["email", "test@test.com"], ["encrypted_password", "$2a$04$2/Wu04cOb0mWoxJ23qB1qefCt1Qo.IM2vR9xSSCTBAcYMIjNRgeZi"], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by UploadController#create as HTML
+  Parameters: {"database"=>#<Rack::Test::UploadedFile:0xa430788 @content_type=nil, @original_filename="example.tab", @tempfile=#<File:/tmp/example.tab20140421-11159-2neads>>}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mCustomer Load (0.1ms)[0m  SELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Snake Plissken' ORDER BY "customers"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["name", "Snake Plissken"], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Bob''s Pizza' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)  [["address", "987 Fake St"], ["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["name", "Bob's Pizza"], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mLineItem Load (0.1ms)[0m  SELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$10 off $20 of food' ORDER BY "line_items"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `description`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["description", "$10 off $20 of food"], ["price", 10.0], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["customer_id", 1], ["line_item_id", 1], ["quantity", 2], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mCustomer Load (0.1ms)[0m  [1mSELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Amy Pond' ORDER BY "customers"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `name`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["name", "Amy Pond"], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mMerchant Load (0.1ms)[0m  [1mSELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Tom''s Awesome Shop' ORDER BY "merchants"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)[0m  [["address", "456 Unreal Rd"], ["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["name", "Tom's Awesome Shop"], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mLineItem Load (0.1ms)[0m  [1mSELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$30 of awesome for $10' ORDER BY "line_items"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `description`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["description", "$30 of awesome for $10"], ["price", 10.0], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["customer_id", 2], ["line_item_id", 2], ["quantity", 5], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mCustomer Load (0.1ms)[0m  SELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Marty McFly' ORDER BY "customers"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["name", "Marty McFly"], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Sneaker Store Emporium' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)  [["address", "123 Fake St"], ["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["name", "Sneaker Store Emporium"], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mLineItem Load (0.1ms)[0m  SELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$20 Sneakers for $5' ORDER BY "line_items"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `description`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["description", "$20 Sneakers for $5"], ["price", 5.0], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["customer_id", 3], ["line_item_id", 3], ["quantity", 1], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mCustomer Load (0.1ms)[0m  [1mSELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Snake Plissken' ORDER BY "customers"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Sneaker Store Emporium' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mLineItem Load (0.1ms)[0m  [1mSELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$20 Sneakers for $5' ORDER BY "line_items"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00], ["customer_id", 1], ["line_item_id", 3], ["quantity", 4], ["updated_at", Sun, 20 Apr 2014 19:27:13 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  Rendered upload/create.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 129ms (Views: 36.0ms | ActiveRecord: 6.3ms)
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "purchases"[0m
+  [1m[35m (0.2ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@test.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (30.3ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["email", "test@test.com"], ["encrypted_password", "$2a$04$ZK1P/pW51XNkZHMbNNMGnOPGiXCbck1F42kvv4.lhyuqrllZf2tUi"], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by UploadController#create as HTML
+  Parameters: {"database"=>#<Rack::Test::UploadedFile:0x8da4b04 @content_type=nil, @original_filename="example.tab", @tempfile=#<File:/tmp/example.tab20140421-11161-5famz8>>}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mCustomer Load (0.1ms)[0m  SELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Snake Plissken' ORDER BY "customers"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["name", "Snake Plissken"], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Bob''s Pizza' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)  [["address", "987 Fake St"], ["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["name", "Bob's Pizza"], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mLineItem Load (0.1ms)[0m  SELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$10 off $20 of food' ORDER BY "line_items"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `description`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["description", "$10 off $20 of food"], ["price", 10.0], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["customer_id", 1], ["line_item_id", 1], ["quantity", 2], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mCustomer Load (0.1ms)[0m  [1mSELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Amy Pond' ORDER BY "customers"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `name`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["name", "Amy Pond"], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mMerchant Load (0.1ms)[0m  [1mSELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Tom''s Awesome Shop' ORDER BY "merchants"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)[0m  [["address", "456 Unreal Rd"], ["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["name", "Tom's Awesome Shop"], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mLineItem Load (0.1ms)[0m  [1mSELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$30 of awesome for $10' ORDER BY "line_items"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `description`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["description", "$30 of awesome for $10"], ["price", 10.0], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["customer_id", 2], ["line_item_id", 2], ["quantity", 5], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mCustomer Load (0.1ms)[0m  SELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Marty McFly' ORDER BY "customers"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["name", "Marty McFly"], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Sneaker Store Emporium' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)  [["address", "123 Fake St"], ["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["name", "Sneaker Store Emporium"], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mLineItem Load (0.1ms)[0m  SELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$20 Sneakers for $5' ORDER BY "line_items"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `description`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["description", "$20 Sneakers for $5"], ["price", 5.0], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["customer_id", 3], ["line_item_id", 3], ["quantity", 1], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mCustomer Load (0.1ms)[0m  [1mSELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Snake Plissken' ORDER BY "customers"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Sneaker Store Emporium' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mLineItem Load (0.1ms)[0m  [1mSELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$20 Sneakers for $5' ORDER BY "line_items"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00], ["customer_id", 1], ["line_item_id", 3], ["quantity", 4], ["updated_at", Sun, 20 Apr 2014 19:27:37 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  Rendered upload/create.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 154ms (Views: 35.7ms | ActiveRecord: 6.5ms)
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "purchases"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "merchants"
+  [1m[36m (0.2ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@test.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (6.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["email", "test@test.com"], ["encrypted_password", "$2a$04$siGKr.iuQhAYeB/kSy4bxuiSquRIA4poCxWCX9axWpJVAMY7LEUOe"], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by UploadController#create as HTML
+  Parameters: {"database"=>#<Rack::Test::UploadedFile:0xa9f5c40 @content_type=nil, @original_filename="example.tab", @tempfile=#<File:/tmp/example.tab20140421-11165-97i6cd>>}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mCustomer Load (0.1ms)[0m  SELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Snake Plissken' ORDER BY "customers"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["name", "Snake Plissken"], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Bob''s Pizza' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)  [["address", "987 Fake St"], ["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["name", "Bob's Pizza"], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mLineItem Load (0.1ms)[0m  SELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$10 off $20 of food' ORDER BY "line_items"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `description`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["description", "$10 off $20 of food"], ["price", 10.0], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["customer_id", 1], ["line_item_id", 1], ["quantity", 2], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mCustomer Load (0.1ms)[0m  [1mSELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Amy Pond' ORDER BY "customers"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `name`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["name", "Amy Pond"], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mMerchant Load (0.1ms)[0m  [1mSELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Tom''s Awesome Shop' ORDER BY "merchants"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)[0m  [["address", "456 Unreal Rd"], ["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["name", "Tom's Awesome Shop"], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mLineItem Load (0.1ms)[0m  [1mSELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$30 of awesome for $10' ORDER BY "line_items"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `description`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["description", "$30 of awesome for $10"], ["price", 10.0], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["customer_id", 2], ["line_item_id", 2], ["quantity", 5], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mCustomer Load (0.1ms)[0m  SELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Marty McFly' ORDER BY "customers"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["name", "Marty McFly"], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Sneaker Store Emporium' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)  [["address", "123 Fake St"], ["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["name", "Sneaker Store Emporium"], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mLineItem Load (0.1ms)[0m  SELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$20 Sneakers for $5' ORDER BY "line_items"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `description`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["description", "$20 Sneakers for $5"], ["price", 5.0], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["customer_id", 3], ["line_item_id", 3], ["quantity", 1], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mCustomer Load (0.1ms)[0m  [1mSELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Snake Plissken' ORDER BY "customers"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Sneaker Store Emporium' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mLineItem Load (0.1ms)[0m  [1mSELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$20 Sneakers for $5' ORDER BY "line_items"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00], ["customer_id", 1], ["line_item_id", 3], ["quantity", 4], ["updated_at", Sun, 20 Apr 2014 19:27:49 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  Rendered upload/create.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 129ms (Views: 36.0ms | ActiveRecord: 6.3ms)
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "purchases"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "merchants"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "customers"[0m
+  [1m[35m (0.2ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@test.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (7.7ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:28:03 UTC +00:00], ["email", "test@test.com"], ["encrypted_password", "$2a$04$UdvXp.bMP/l3vE1Zb1nn/eLw2OSfLOCO0UTYSdf.dSQr2z5plZfa."], ["updated_at", Sun, 20 Apr 2014 19:28:03 UTC +00:00]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by UploadController#create as HTML
+  Parameters: {"database"=>#<Rack::Test::UploadedFile:0xa80a980 @content_type=nil, @original_filename="example.tab", @tempfile=#<File:/tmp/example.tab20140421-11171-1b2omxv>>}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mCustomer Load (0.1ms)[0m  SELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Snake Plissken' ORDER BY "customers"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:28:03 UTC +00:00], ["name", "Snake Plissken"], ["updated_at", Sun, 20 Apr 2014 19:28:03 UTC +00:00]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Bob''s Pizza' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)  [["address", "987 Fake St"], ["created_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00], ["name", "Bob's Pizza"], ["updated_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mLineItem Load (0.1ms)[0m  SELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$10 off $20 of food' ORDER BY "line_items"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `description`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00], ["description", "$10 off $20 of food"], ["price", 10.0], ["updated_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00], ["customer_id", 1], ["line_item_id", 1], ["quantity", 2], ["updated_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mCustomer Load (0.1ms)[0m  [1mSELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Amy Pond' ORDER BY "customers"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `name`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00], ["name", "Amy Pond"], ["updated_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mMerchant Load (0.1ms)[0m  [1mSELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Tom''s Awesome Shop' ORDER BY "merchants"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)[0m  [["address", "456 Unreal Rd"], ["created_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00], ["name", "Tom's Awesome Shop"], ["updated_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mLineItem Load (0.1ms)[0m  [1mSELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$30 of awesome for $10' ORDER BY "line_items"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `description`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00], ["description", "$30 of awesome for $10"], ["price", 10.0], ["updated_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00], ["customer_id", 2], ["line_item_id", 2], ["quantity", 5], ["updated_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mCustomer Load (0.1ms)[0m  SELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Marty McFly' ORDER BY "customers"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00], ["name", "Marty McFly"], ["updated_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Sneaker Store Emporium' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)  [["address", "123 Fake St"], ["created_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00], ["name", "Sneaker Store Emporium"], ["updated_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mLineItem Load (0.1ms)[0m  SELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$20 Sneakers for $5' ORDER BY "line_items"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `description`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00], ["description", "$20 Sneakers for $5"], ["price", 5.0], ["updated_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00], ["customer_id", 3], ["line_item_id", 3], ["quantity", 1], ["updated_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mCustomer Load (0.1ms)[0m  [1mSELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Snake Plissken' ORDER BY "customers"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Sneaker Store Emporium' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mLineItem Load (0.1ms)[0m  [1mSELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$20 Sneakers for $5' ORDER BY "line_items"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00], ["customer_id", 1], ["line_item_id", 3], ["quantity", 4], ["updated_at", Sun, 20 Apr 2014 19:28:04 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  Rendered upload/create.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 129ms (Views: 36.0ms | ActiveRecord: 6.4ms)
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "purchases"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "merchants"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "customers"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "line_items"
+  [1m[36m (0.2ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@test.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (6.0ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:28:14 UTC +00:00], ["email", "test@test.com"], ["encrypted_password", "$2a$04$hPWpgAXWs8v0jef67.R8zeB8ZtwqM6yz3K4/GuBjlOAyYhIpj3XfW"], ["updated_at", Sun, 20 Apr 2014 19:28:14 UTC +00:00]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by UploadController#create as HTML
+  Parameters: {"database"=>#<Rack::Test::UploadedFile:0x958bbb0 @content_type=nil, @original_filename="example.tab", @tempfile=#<File:/tmp/example.tab20140421-11502-g6wd35>>}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mCustomer Load (0.1ms)[0m  SELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Snake Plissken' ORDER BY "customers"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:28:14 UTC +00:00], ["name", "Snake Plissken"], ["updated_at", Sun, 20 Apr 2014 19:28:14 UTC +00:00]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Bob''s Pizza' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)  [["address", "987 Fake St"], ["created_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00], ["name", "Bob's Pizza"], ["updated_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mLineItem Load (0.1ms)[0m  SELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$10 off $20 of food' ORDER BY "line_items"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `description`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00], ["description", "$10 off $20 of food"], ["price", 10.0], ["updated_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00], ["customer_id", 1], ["line_item_id", 1], ["quantity", 2], ["updated_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mCustomer Load (0.1ms)[0m  [1mSELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Amy Pond' ORDER BY "customers"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `name`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00], ["name", "Amy Pond"], ["updated_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mMerchant Load (0.1ms)[0m  [1mSELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Tom''s Awesome Shop' ORDER BY "merchants"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)[0m  [["address", "456 Unreal Rd"], ["created_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00], ["name", "Tom's Awesome Shop"], ["updated_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mLineItem Load (0.1ms)[0m  [1mSELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$30 of awesome for $10' ORDER BY "line_items"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `description`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00], ["description", "$30 of awesome for $10"], ["price", 10.0], ["updated_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00], ["customer_id", 2], ["line_item_id", 2], ["quantity", 5], ["updated_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mCustomer Load (0.1ms)[0m  SELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Marty McFly' ORDER BY "customers"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "customers" ("created_at", "name", "updated_at") VALUES (?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00], ["name", "Marty McFly"], ["updated_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Sneaker Store Emporium' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `address`
+Binary data inserted for `string` type on column `name`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "merchants" ("address", "created_at", "name", "updated_at") VALUES (?, ?, ?, ?)  [["address", "123 Fake St"], ["created_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00], ["name", "Sneaker Store Emporium"], ["updated_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mLineItem Load (0.1ms)[0m  SELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$20 Sneakers for $5' ORDER BY "line_items"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+Binary data inserted for `string` type on column `description`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "line_items" ("created_at", "description", "price", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00], ["description", "$20 Sneakers for $5"], ["price", 5.0], ["updated_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00], ["customer_id", 3], ["line_item_id", 3], ["quantity", 1], ["updated_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mCustomer Load (0.1ms)[0m  [1mSELECT "customers".* FROM "customers" WHERE "customers"."name" = 'Snake Plissken' ORDER BY "customers"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mMerchant Load (0.1ms)[0m  SELECT "merchants".* FROM "merchants" WHERE "merchants"."name" = 'Sneaker Store Emporium' ORDER BY "merchants"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mLineItem Load (0.1ms)[0m  [1mSELECT "line_items".* FROM "line_items" WHERE "line_items"."description" = '$20 Sneakers for $5' ORDER BY "line_items"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "purchases" ("created_at", "customer_id", "line_item_id", "quantity", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00], ["customer_id", 1], ["line_item_id", 3], ["quantity", 4], ["updated_at", Sun, 20 Apr 2014 19:28:15 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  Rendered upload/create.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 128ms (Views: 35.9ms | ActiveRecord: 6.3ms)
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "purchases"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "merchants"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "customers"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "line_items"
+  [1m[36m (0.2ms)[0m  [1mrollback transaction[0m

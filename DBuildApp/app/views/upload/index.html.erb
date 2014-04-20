@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Upload your tab delimited database.
+  </div>
+  <div class="panel-body">
+    <%= form_tag({action: :create}, multipart: true) do %>
+      <span class="btn btn-default btn-file">
+        <%= file_field_tag 'database' %>
+      </span>
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit">Upload!</button>
+      </span>
+    <% end %>
+  </div>
+</div>
